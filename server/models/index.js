@@ -38,7 +38,7 @@ User.hasMany(Review, {
   sourceKey: 'id',
   onDelete: 'CASCADE',
 });
-RequestList.belongsTo(User, { foreignKey: 'id', targetKey: 'id' });
+// RequestList.belongsTo(User, { foreignKey: 'id', targetKey: 'id' });
 
 Proxy.hasOne(ChatRoom, {
   foreignKey: 'proxyId',
@@ -67,7 +67,6 @@ WaitMate.hasMany(LikeWait, {
   onDelete: 'CASCADE',
 });
 LikeWait.belongsTo(WaitMate, { foreignKey: 'wmId', targetKey: 'wmId' });
-
 
 db.User = User;
 db.Proxy = Proxy;
