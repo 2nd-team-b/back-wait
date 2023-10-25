@@ -1,7 +1,12 @@
 const { WaitMate } = require('../models');
 
-// post: resiter
-exports.postRegister = async (req, res) => {
+// get
+exports.getWaitMate = async (req, res) => {
+  res.send('success');
+};
+
+// post
+exports.postWaitMate = async (req, res) => {
   // 요청에서 받을 데이터
   //  - title(varchar(150)),wmAddress(varchar(150)),waitTime(varchar(250)),description(text),pay(int, allowNull),photo(경로?)(varchar(150))
   // 응답 데이터

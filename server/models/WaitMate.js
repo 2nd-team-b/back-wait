@@ -7,11 +7,11 @@ const WaitMate = (Sequelize, DataTypes) => {
         autoIncrement: true,
         primaryKey: true,
       },
-      id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        comment: '유저 아이디',
-      },
+      // id: { //여기 주석표시해야 에러 발생 안함
+      //   type: DataTypes.INTEGER,
+      //   allowNull: false,
+      //   comment: '유저 아이디',
+      // },
       title: {
         type: DataTypes.STRING(255),
         allowNull: false,
