@@ -38,7 +38,7 @@ User.hasMany(Review, {
   sourceKey: 'id',
   onDelete: 'CASCADE',
 });
-// RequestList.belongsTo(User, { foreignKey: 'id', targetKey: 'id' });
+Review.belongsTo(User, { foreignKey: 'id', targetKey: 'id' });
 
 Proxy.hasOne(ChatRoom, {
   foreignKey: 'proxyId',
