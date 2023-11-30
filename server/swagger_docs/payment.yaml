@@ -1,0 +1,28 @@
+tags:
+  - name: Payment
+    description: 결제 기능 관련 apis
+
+paths:
+  /payment/kakao:
+    post:
+      summary: 카카오로 결제 요청
+      tags:
+        - Payment
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                wmId:
+                  type: integer
+                  description: 웨메 id
+                id:
+                  type: integer
+                  description: 프록시 id
+      responses:
+        '200':
+          description: 카카오페이 페이지 결제 후 거래 성공이 나갑니다.
+        '500':
+          description: 서버 에러

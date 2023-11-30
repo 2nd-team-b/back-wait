@@ -1,0 +1,552 @@
+tags:
+  - name: User
+    description: 유저와 관련된 API 모음
+paths:
+  /user/register:
+    post:
+      summary: 새로운 유저 등록
+      tags:
+        - User
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  type: string
+                password:
+                  type: string
+                nickname:
+                  type: string
+              required:
+                - userId
+                - password
+                - nickname
+      responses:
+        '201':
+          description: 회원 가입 완료
+        '400':
+          description: 잘못된 데이터 전송
+        '500':
+          description: 알 수 없는 서버 에러
+  /user/login:
+    post:
+      summary: 로그인
+      description: 사용자 로그인을 위한 엔드포인트입니다.
+      tags:
+        - User
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  type: string
+                  description: 사용자 아이디
+                password:
+                  type: string
+                  description: 사용자 비밀번호
+              required:
+                - userId
+                - password
+      responses:
+        200:
+          description: 로그인 성공
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  userId:
+                    type: string
+                    description: 사용자 아이디
+                  id:
+                    type: integer
+                    description: 사용자 식별자
+                  email:
+                    type: string
+                    description: 사용자 이메일
+                  nickname:
+                    type: string
+                    description: 사용자 닉네임
+                  photo:
+                    type: string
+                    description: 사용자 사진 URL
+                  createdAt:
+                    type: string
+                    format: date-time
+                    description: 생성일자
+                  updatedAt:
+                    type: string
+                    format: date-time
+                    description: 업데이트 일자
+              example:
+                userId: "exampleUser"
+                id: 123
+                email: "example@example.com"
+                nickname: "Example User"
+                photo: null
+                createdAt: "2023-10-25T05:06:38.000Z"
+                updatedAt: "2023-10-25T05:06:38.000Z"
+        401:
+          description: 인증 오류
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: 오류 메시지
+                example: |
+                  {
+                    "message": "회원가입되지 않은 유저입니다." 
+                  }
+                  or
+                  {
+                    "message": "올바르지 않은 비밀번호 입니다."
+                  }
+        500:
+          description: 서버 오류
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: 오류 메시지
+                example: '알 수 없는 서버 에러 입니다.'
+  /user/myInfo:
+    get:
+      summary: 사용자 정보 조회
+      description: 현재 로그인한 사용자의 정보를 조회합니다.
+      tags:
+        - User
+      parameters:
+        - name: Cookie
+          in: header
+          description: 로그인 토큰 (access)
+          required: true
+      responses:
+        200:
+          description: 사용자 정보 조회 성공
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  userId:
+                    type: string
+                    description: 사용자 아이디
+                  id:
+                    type: integer
+                    description: 사용자 식별자
+                  email:
+                    type: string
+                    description: 사용자 이메일
+                  nickname:
+                    type: string
+                    description: 사용자 닉네임
+                  photo:
+                    type: string
+                    description: 사용자 사진 URL
+                  createdAt:
+                    type: string
+                    format: date-time
+                    description: 생성일자
+                  updatedAt:
+                    type: string
+                    format: date-time
+                    description: 업데이트 일자
+              example:
+                userId: "exampleUser"
+                id: 123
+                email: "example@example.com"
+                nickname: "Example User"
+                photo: null
+                createdAt: "2023-10-25T05:06:38.000Z"
+                updatedAt: "2023-10-25T05:06:38.000Z"
+        401:
+          description: 인증 오류
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: 오류 메시지
+                example : '로그인을 먼저 해주세요'
+        403:
+          description: 인증 오류
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: 오류 메시지
+                example : '유효하지 않은 토큰입니다.'
+        500:
+          description: 서버 오류
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: 오류 메시지
+                example : '알 수 없는 서버 에러 입니다.'
+  /user/{userId}:
+    get:
+      summary: 사용자 정보 조회
+      description: 보고 싶은 사용자의 정보를 조회합니다.
+      tags:
+        - User
+      parameters:
+        - name: userId
+          in: path
+          required: true
+      responses:
+        200:
+          description: 사용자 정보 조회 성공
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  userId:
+                    type: string
+                    description: 사용자 아이디
+                  id:
+                    type: integer
+                    description: 사용자 식별자
+                  email:
+                    type: string
+                    description: 사용자 이메일
+                  nickname:
+                    type: string
+                    description: 사용자 닉네임
+                  photo:
+                    type: string
+                    description: 사용자 사진 URL
+                  createdAt:
+                    type: string
+                    format: date-time
+                    description: 생성일자
+                  updatedAt:
+                    type: string
+                    format: date-time
+                    description: 업데이트 일자
+              example:
+                userId: "exampleUser"
+                id: 123
+                email: "example@example.com"
+                nickname: "Example User"
+                photo: null
+                createdAt: "2023-10-25T05:06:38.000Z"
+                updatedAt: "2023-10-25T05:06:38.000Z"
+        404:
+          description: 존재하지 않는 사용자
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: 오류 메시지
+                example : '존재하지 않는 사용자 입니다.'
+        500:
+          description: 서버 오류
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: 오류 메시지
+                example : '알 수 없는 서버 에러 입니다.'
+  /user:
+    put:
+      tags:
+        - User
+      summary: 유저의 정보 업데이트
+      description: 유저의 정보를 업데이트합니다.
+      produces:
+        - application/json
+      parameters:
+        - name: Authorization
+          in: header
+          description: User's JWT token
+          required: true
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                password:
+                  type: string
+                nickname:
+                  type: string
+              required:
+                - password
+                - nickname
+
+      responses:
+        '201':
+          description: Successfully updated user information.
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: 업데이트가 완료되었습니다.
+        '401':
+          description: Unauthorized. User needs to login first.
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: 로그인을 먼저 해주세요.
+        '403':
+          description: Forbidden. User ID cannot be changed.
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: 아이디는 변경할 수 없습니다.
+        '400':
+          description: Bad Request. The field name does not exist or the value already exists.
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: 이미 존재하는 값이거나 존재하지 않는 필드이름 입니다.
+        '500':
+          description: Internal Server Error. Unknown server error.
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: 알 수 없는 서버 에러 입니다.
+    delete:
+      summary: 사용자 탈퇴
+      description: 현재 로그인한 사용자의 계정을 탈퇴합니다.
+      tags:
+        - User
+      parameters:
+        - name: Cookie
+          in: header
+          description: 로그인 토큰 (access)
+          required: true
+      responses:
+        204:
+          description: 사용자 탈퇴 성공
+        401:
+          description: 인증 오류
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: 오류 메시지
+                    example: '로그인을 먼저 해주세요'
+        403:
+          description: 권한 오류
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: 오류 메시지
+                    example: '유효하지 않은 토큰입니다.'
+        500:
+          description: 서버 오류
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: 오류 메시지
+                    example: '알 수 없는 서버 에러 입니다.'
+  /check/userId:
+    post:
+      tags:
+        - User
+      summary: userId 중복 체크
+      description: 입력한 userId가 이미 존재하는지 체크합니다.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - userId
+              properties:
+                userId:
+                  type: string
+                  example: '유저 아이디'
+      responses:
+        '200':
+          description: 사용가능한 userId
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: '사용가능한 userId입니다.'
+        '400':
+          description: 이미 존재하는 userId
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: '이미 존재하는 userId입니다.'
+        '500':
+          description: 서버 에러
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: '알 수 없는 서버 에러'
+  /check/nickname:
+    post:
+      tags:
+        - User
+      summary: nickname 중복 체크
+      description: 입력한 nickname이 이미 존재하는지 체크합니다.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - nickname
+              properties:
+                nickname:
+                  type: string
+                  example: '유저 닉네임'
+      responses:
+        '200':
+          description: 사용가능한 nickname
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: '사용가능한 nickname입니다.'
+        '400':
+          description: 이미 존재하는 nickname
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: '이미 존재하는 nickname입니다.'
+        '500':
+          description: 서버 에러
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: '알 수 없는 서버 에러'
+  /logOut:
+    get:
+      tags:
+        - User
+      summary: 로그아웃
+      description: 존재하는 쿠키를 지우고 빈 값을 내보냅니다.
+      parameters:
+        - name: Cookie
+          in: header
+          description: 로그인 토큰 (access)
+          required: true
+      responses:
+        '204':
+          description: 로그아웃 완료
+        '500':
+          description: 서버 에러
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: '알 수 없는 서버 에러'
+    /user/profileImg:
+      post:
+        tags:
+          - User
+        summary: 프로필 이미지 변경
+        requestBody:
+          content:
+            multipart/form-data:
+              schema:
+                type: object
+                properties:
+                  profileImg:
+                    type: string
+                    format: binary
+                    description: Profile image file to upload
+        responses:
+          '201':
+            description: 정상적으로 프로필 이미지가 변경되었습니다.
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    message:
+                      type: string
+                      example: 정상적으로 프로필 이미지가 변경되었습니다.
+          '500':
+            description: 알 수 없는 서버 에러
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    message:
+                      type: string
+                      example: 알 수 없는 서버 에러
+

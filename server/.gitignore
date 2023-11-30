@@ -1,0 +1,12 @@
+config/
+node_modules/
+package-lock.json
+.env
+env/
+.DS_Store
+**/.DS_Store
+public/**/*.png
+public/**/*.jpg
+public/**/*.jpeg
+!public/profileImg/default.png
+!public/waitMateImg/waitMateDefaultImg.png

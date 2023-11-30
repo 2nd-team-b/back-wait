@@ -1,0 +1,45 @@
+tags:
+  - name: LikeWait
+    description: 웨이트메이트 관심 등록
+paths:
+  /likeWait:
+    post:
+      summary: likeWait 등록
+      tags:
+        - LikeWait
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                wmId:
+                  type: integer
+                proxyId:
+                  type: integer
+              required:
+                - wmId
+                - proxyId
+      responses:
+        '200':
+          description: 관심 등록 성공/실패
+          content:
+            application/json:
+              examples:
+                example1:
+                  summary: 관심 등록 성공
+                  value:
+                    result: 'success'
+                example2:
+                  summary: 관심 등록 실패
+                  value:
+                    result: 'fail'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              example:
+                error:
+                  code: 500
+                  message: 'Internal Server Error'

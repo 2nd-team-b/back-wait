@@ -1,0 +1,212 @@
+tags:
+  - name: WaitMate
+    description: 웨이트메이트와 관련된 API 모음
+
+paths:
+  /waitMate/detail:
+    get:
+      summary: waitMateDetail 조회
+      tags:
+        - WaitMate
+      parameters:
+        - in: query
+          name: wmId
+          schema:
+            type: integer
+          required: true
+          description: wmId
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              example:
+                waitMate:
+                  wmId: 2
+                  title: '사람구합니다.'
+                  wmAddress: '서울시 송파구'
+                  waitTime: '1024'
+                  description: '배고파요'
+                  pay: 123
+                  photo: null
+                  createdAt: '2023-10-24T12:49:13.000Z'
+                  updatedAt: '2023-10-24T12:49:13.000Z'
+                  id: 3
+                recentHiresCount: 3
+                waitMateApplyCount: 2
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              example:
+                message: 'Internal Server Error'
+
+  /waitMate:
+    post:
+      summary: 새로운 웨이트메이트 등록
+      tags:
+        - WaitMate
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                wmId:
+                  type: integer
+                id:
+                  type: integer
+                title:
+                  type: string
+                wmAddress:
+                  type: string
+                waitTime:
+                  type: string
+                description:
+                  type: string
+                pay:
+                  type: integer
+                photo:
+                  type: file
+              required:
+                - wmId
+                - id
+                - title
+                - wmAddress
+                - waitTime
+                - description
+      responses:
+        '200':
+          description: 웨이트메이트 등록 성공
+          content:
+            application/json:
+              example:
+                result: 'success'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              example:
+                error:
+                  code: 500
+                  message: 'Internal Server Error'
+
+    delete:
+      summary: 웨이트메이트 삭제
+      tags:
+        - WaitMate
+      parameters:
+        - in: query
+          name: wmId
+          schema:
+            type: integer
+          required: true
+          description: wmId
+      responses:
+        '200':
+          description: 웨이트메이트 삭제 성공
+          content:
+            application/json:
+              example:
+                result: 'success'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              example:
+                error:
+                  code: 500
+                  message: 'Internal Server Error'
+
+    patch:
+      summary: 웨이트메이트 수정
+      tags:
+        - WaitMate
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                wmId:
+                  type: integer
+                title:
+                  type: string
+                wmAddress:
+                  type: string
+                waitTime:
+                  type: string
+                description:
+                  type: string
+                pay:
+                  type: integer
+                photo:
+                  type: string
+              required:
+                - wmId
+                - title
+                - wmAddress
+                - waitTime
+                - description
+      responses:
+        '200':
+          description: 웨이트메이트 수정 성공
+          content:
+            application/json:
+              example:
+                result: 'success'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              example:
+                error:
+                  code: 500
+                  message: 'Internal Server Error'
+
+  /waitMate/list:
+    get:
+      summary: 웨이트메이트 목록 조회
+      tags:
+        - WaitMate
+      parameters:
+        - in: query
+          name: wmAddress
+          schema:
+            type: string
+          required: true
+          description: 웨이트메이트 주소
+        - in: query
+          name: order
+          schema:
+            type: string
+          required: true
+          description: 정렬 기준
+        - in: query
+          name: pageNum
+          schema:
+            type: integer
+          required: true
+          description: 페이지 숫자
+        - in: query
+          name: option
+          schema:
+            type: string
+          description: 이전, 다음 버튼인지
+      responses:
+        '200':
+          description: 웨이트메이트 목록 조회 성공
+          content:
+            application/json:
+              example:
+                result: 'success'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              example:
+                error:
+                  code: 500
+                  message: 'Internal Server Error'
